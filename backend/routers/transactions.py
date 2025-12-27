@@ -25,7 +25,7 @@ REQUIRED_COLUMNS = {
 @router.post("/upload")
 async def upload_transactions(
     file: UploadFile = File(...),
-    db: Session = Depends(get_db)   # ✅ DB injected
+    db: Session = Depends(get_db)   # DB injected
 ):
 
     # ---------- File validation ----------
@@ -38,7 +38,7 @@ async def upload_transactions(
     contents = await file.read()
     file_hash = hashlib.sha256(contents).hexdigest()
 
-    # ---------- DUPLICATE CHECK ✅ ----------
+    # ---------- DUPLICATE CHECK ----------
     existing_file = (
         db.query(UploadedFile)
         .filter(UploadedFile.file_hash == file_hash)
@@ -86,7 +86,7 @@ async def upload_transactions(
         model_loader.anomaly_model.predict(df[["amount"]]) == -1
     )
 
-    # ---------- SAVE TO DATABASE ✅ ----------
+    # ---------- SAVE TO DATABASE ----------
     for _, row in df.iterrows():
         tx = Transaction(
             date=row["date"].date(),   # store as DATE
@@ -101,7 +101,7 @@ async def upload_transactions(
 
     db.commit()   # COMMIT ONCE
 
-    # ---------- SAVE FILE HASH ✅ ----------
+    # ---------- SAVE FILE HASH  ----------
     uploaded = UploadedFile(file_hash=file_hash)
     db.add(uploaded)
     db.commit()
