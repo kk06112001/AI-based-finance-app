@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
+
+# Databases
+*.db
+*.sqlite
+postgres_data/
+
+# ML
+models/*.pkl
+models/*.joblib
+
+# Uploads
+uploads/
+*.csv
+
+# OS
+.DS_Store
+Thumbs.db
